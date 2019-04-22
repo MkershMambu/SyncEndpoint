@@ -16,7 +16,7 @@ responseDetails = {
 def getUniqueResponseID():
     return str(uuid.uuid4())
 
-serverURLPath = "http://127.0.0.1:8000"
+serverURLPath = "http://127.0.0.1:8001"
 
 @app.route('/', methods=['GET', 'POST'])
 async def home(request : Request):
@@ -91,4 +91,4 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         print("Setting serverURLPath")
         serverURLPath = sys.argv[1]
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=8001)
