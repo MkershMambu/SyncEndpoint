@@ -20,6 +20,7 @@ serverURLPath = "http://127.0.0.1:8001"
 
 @app.route('/', methods=['GET', 'POST'])
 async def home(request : Request):
+    global responseEvents
     printx("[1a] / called")
     responseID = getUniqueResponseID()
     responseEvents[responseID] = asyncio.Event()
@@ -52,6 +53,7 @@ async def home(request : Request):
 
 @app.route('/response', methods=['POST'])
 async def responseReceiver(request : Request):
+    global responseEvents
     # Really strange but the next call to dummy (or a print statement) is needed here for this method to work consistently??
     dummy()
     # printx("[4] In /response")
