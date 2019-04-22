@@ -65,7 +65,8 @@ async def responseReceiver(request : Request):
 async def mpoTest(request : Request):
     printx("[2] dummyMPOEndpoint called")
     requestBody = await request.json()
-    asyncio.create_task(mpoEndpointTask(requestBody))
+    loop = asyncio.get_event_loop()
+    loop.create_task(mpoEndpointTask(requestBody))
     return JsonResponse({'success': 'OK'})
 
 async def mpoEndpointTask(params):
