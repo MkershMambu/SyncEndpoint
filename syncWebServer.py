@@ -81,8 +81,8 @@ async def mpoEndpointTask(params):
                 printx("[3b] Callback endpoint returned:")
 
 def printx(strtoPrint):
-    # print(strtoPrint)
-    pass
+    print(strtoPrint)
+    # pass
 
 def dummy():
     pass
