@@ -42,7 +42,7 @@ class Config:
 # Registering the config instance.
 confg = Config()
 confg.setName("Set Name as part of startup")
-confg.setEvent("MKTEST1")
+confg.addEvent("MKTEST1")
 app.components.add(confg)
 
 def getUniqueResponseID():
