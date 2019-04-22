@@ -13,18 +13,41 @@ responseDetails = {
     "ID121324242": "This is the response back"
 }
 
+# Config will be a new component.
+class Config:
+    def __init__(self):
+        self.name = 'Vibora Component'
+        self.responseEvents = {}
+        self.responseDetails = {}
+    def addEvent(self,responseID):
+        self.responseEvents[responseID] = asyncio.Event()
+    def getEvent(self,responseID):
+        return self.responseEvents[responseID]
+    def setEvent(self,responseID):
+        self.responseEvents[responseID].set()
+    def addResponse(self,responseID, responseStr):
+        self.responseDetails[responseID] = responseStr
+    def getResponse(self,responseID):
+        return self.responseDetails[responseID]
+    def clearAll(self,responseID):
+        del self.responseEvents[responseID]
+        del self.responseDetails[responseID]
+
+
+# Registering the config instance.
+app.components.add(Config())
+
 def getUniqueResponseID():
     return str(uuid.uuid4())
 
 serverURLPath = "http://127.0.0.1:8001"
 
 @app.route('/', methods=['GET', 'POST'])
-async def home(request : Request):
-    global responseEvents
+async def home(request : Request, config: Config):
     printx("[1a] / called")
     responseID = getUniqueResponseID()
-    responseEvents[responseID] = asyncio.Event()
-    print(responseEvents)
+    config.addEvent(responseID)
+    # responseEvents[responseID] = asyncio.Event()
     if request.method != b'POST':
         return JsonResponse({'ERROR': 'Need to call using POST'})
     requestBody = await request.json()
@@ -44,25 +67,23 @@ async def home(request : Request):
                 printx("[1c] MPO startup call returned:")
 
     printx('[1d] In webserver waiting for response ...')
-    await responseEvents[responseID].wait()
+    await config.getEvent(responseID).wait()
+    # await responseEvents[responseID].wait()
     printx('[1e] received response ...')
-    responseObj = responseDetails[responseID]
-    del responseEvents[responseID]
-    del responseDetails[responseID]
+    responseObj = config.getResponse(responseID)
+    config.clearAll(responseID)
     return JsonResponse(responseObj)
 
 @app.route('/response', methods=['POST'])
-async def responseReceiver(request : Request):
-    global responseEvents
+async def responseReceiver(request : Request, config: Config):
     # Really strange but the next call to dummy (or a print statement) is needed here for this method to work consistently??
     dummy()
     # printx("[4] In /response")
     requestBody = await request.json()
     responseID = requestBody['callbackResponseID']
     # print("[4a] responding for {0}".format(responseID))
-    print(responseEvents)
-    responseEvents[responseID].set()
-    responseDetails[responseID] = requestBody
+    config.addResponse(responseID,requestBody)
+    config.setEvent(responseID)
     return JsonResponse({'msg': 'ok'})
 
 @app.route('/dummyMPOEndpoint', methods=['POST'])
