@@ -23,6 +23,7 @@ async def home(request : Request):
     printx("[1a] / called")
     responseID = getUniqueResponseID()
     responseEvents[responseID] = asyncio.Event()
+    print(responseEvents)
     if request.method != b'POST':
         return JsonResponse({'ERROR': 'Need to call using POST'})
     requestBody = await request.json()
