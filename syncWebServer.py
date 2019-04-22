@@ -4,6 +4,7 @@ import asyncio
 import json
 import uuid
 from vibora import Vibora, JsonResponse, Request, Response
+from multiprocessing import Manager
 
 app = Vibora()
 
