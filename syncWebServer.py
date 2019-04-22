@@ -74,6 +74,7 @@ async def home(request : Request, config: Config):
                 printx("[1c] MPO startup call returned:")
 
     printx('[1d] In webserver waiting for response ...')
+    printx(config.responseEvents)
     await config.getEvent(responseID).wait()
     # await responseEvents[responseID].wait()
     printx('[1e] received response ...')
