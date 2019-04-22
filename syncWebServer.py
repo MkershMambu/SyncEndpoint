@@ -57,6 +57,7 @@ async def responseReceiver(request : Request):
     requestBody = await request.json()
     responseID = requestBody['callbackResponseID']
     # print("[4a] responding for {0}".format(responseID))
+    print(responseEvents)
     responseEvents[responseID].set()
     responseDetails[responseID] = requestBody
     return JsonResponse({'msg': 'ok'})
