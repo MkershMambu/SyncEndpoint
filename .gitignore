@@ -1,0 +1,11 @@
+ENV.py
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+*.pyc
+*-checkpoint.ipynb
+vibora
