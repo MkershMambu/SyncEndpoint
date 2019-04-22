@@ -90,7 +90,9 @@ async def responseReceiver(request : Request, config: Config):
     responseID = requestBody['callbackResponseID']
     # current_config = request.components.get(Config)
     configName = config.getName()
+    
     printx(f"[4a] responding for {responseID} - Config Name: |{configName}|")
+    printx(config.responseEvents)
     config.addResponse(responseID,requestBody)
     config.setEvent(responseID)
     return JsonResponse({'msg': 'ok'})
