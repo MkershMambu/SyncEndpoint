@@ -32,10 +32,17 @@ class Config:
     def clearAll(self,responseID):
         del self.responseEvents[responseID]
         del self.responseDetails[responseID]
+    def setName(self,nm):
+        self.name = nm
+    def getName(self):
+        return self.name
+
 
 
 # Registering the config instance.
-app.components.add(Config())
+confg = Config()
+confg.setName("Set Name as part of startup")
+app.components.add(confg)
 
 def getUniqueResponseID():
     return str(uuid.uuid4())
@@ -78,10 +85,12 @@ async def home(request : Request, config: Config):
 async def responseReceiver(request : Request, config: Config):
     # Really strange but the next call to dummy (or a print statement) is needed here for this method to work consistently??
     dummy()
-    # printx("[4] In /response")
+    printx("[4] In /response")
     requestBody = await request.json()
     responseID = requestBody['callbackResponseID']
-    # print("[4a] responding for {0}".format(responseID))
+    # current_config = request.components.get(Config)
+    configName = config.getName()
+    printx(f"[4a] responding for {responseID} - Config Name: |{configName}|")
     config.addResponse(responseID,requestBody)
     config.setEvent(responseID)
     return JsonResponse({'msg': 'ok'})
