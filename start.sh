@@ -5,4 +5,4 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd ${DIR}
 
 source ../env/bin/activate
-python synvWebServer.py http://ec2-52-56-214-201.eu-west-2.compute.amazonaws.com:8001&
+python syncWebServer.py http://ec2-52-56-214-201.eu-west-2.compute.amazonaws.com:8001&
