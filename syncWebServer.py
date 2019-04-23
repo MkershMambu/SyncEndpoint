@@ -49,7 +49,7 @@ app.components.add(confg)
 def getUniqueResponseID():
     return str(uuid.uuid4())
 
-serverURLPath = "http://127.0.0.1:80"
+serverURLPath = "http://127.0.0.1:8001"
 
 @app.route('/', methods=['GET', 'POST'])
 async def home(request : Request, config: Config):
@@ -138,7 +138,7 @@ if __name__ == '__main__':
         serverURLPath = sys.argv[1]
     try:
         print("Run webserver - workers=1")
-        app.run(host="0.0.0.0", port=80, workers=1)
+        app.run(host="0.0.0.0", port=8001, workers=1)
     except:
         print("Run webserver")
-        app.run(host="0.0.0.0", port=80)
+        app.run(host="0.0.0.0", port=8001)
