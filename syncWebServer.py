@@ -108,6 +108,11 @@ async def mpoTest(request : Request):
     loop.create_task(mpoEndpointTask(requestBody))
     return JsonResponse({'success': 'OK'})
 
+@app.route('/TestEndpoint', methods=['GET'])
+async def mpoTest(request : Request):
+    printx("[5] TestEndpoint called")
+    return JsonResponse({'success': 'OK'})
+
 async def mpoEndpointTask(params):
     printx("[3] mpoEndpointTask called")
     callbackResponseID = params['callbackResponseID'] 
