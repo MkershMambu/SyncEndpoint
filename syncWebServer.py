@@ -132,6 +132,8 @@ if __name__ == '__main__':
         print("Setting serverURLPath")
         serverURLPath = sys.argv[1]
     try:
+        print("Run webserver - workers=1")
         app.run(host="0.0.0.0", port=8001, workers=1)
     except:
+        print("Run webserver")
         app.run(host="0.0.0.0", port=8001)
