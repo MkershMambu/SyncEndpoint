@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd ${DIR}
 
 source ../env/bin/activate
-nohup python syncWebServer.py http://ec2-52-56-214-201.eu-west-2.compute.amazonaws.com:8001 &
+nohup python syncWebServer.py http://ec2-35-177-46-123.eu-west-2.compute.amazonaws.com:8001 &
 VIBORA_PID=$!
 
 # Create a stop.sh script to kill the running instances
